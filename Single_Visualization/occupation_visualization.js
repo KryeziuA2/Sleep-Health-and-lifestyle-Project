@@ -62,9 +62,33 @@ svg.append("text")
     .attr("x", width / 2 + paddingLeft)  // Adjust the left padding
     .attr("y", margin.top / 2 + paddingTop)  // Adjust the top padding
     ;
-    }
-  }
-  
+     // Add zoom-in icon
+ d3.select("#occupation")
+ .append("div")
+ .attr("class", "zoom-icon zoom-in")
+ .on("click", () => {
+   svg.transition().call(zoom.scaleBy, 2);
+ })
+ .html('<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" width="16" height="16" style="margin-right: 10px;"><path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 0 1-2 0V9H1a1 1 0 1 1 0-2h6V1a1 1 0 0 1 1-1z"/></svg>');
+
+// Add zoom-out icon
+d3.select("#occupation")
+ .append("div")
+ .attr("class", "zoom-icon zoom-out")
+ .on("click", () => {
+   svg.transition().call(zoom.scaleBy, 0.5); // Adjust the scale factor for zoom-out
+ })
+ .html('<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" width="16" height="16"><path d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"/></svg>');
+
+const zoom = d3.zoom()
+ .scaleExtent([0.5, 8]) // Adjust the minimum scale for zoom-out
+ .on("zoom", (event) => {
+   svg.attr("transform", event.transform);
+ });
+
+svg.call(zoom);
+}
+}
   // Fetch data from FastAPI endpoint
   fetch('http://localhost:8000/read_dataset')
     .then(response => response.json())

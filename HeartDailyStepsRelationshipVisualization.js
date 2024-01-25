@@ -59,11 +59,36 @@ class HeartRateStepsRelationshipVisualizer {
         console.log('Heart Rates:', heartRates);
         console.log('Daily Steps:', dailySteps);
         console.log('Visualization created.');
-      } catch (error) {
-        console.error('Error creating visualization:', error);
-      }
-    }
-  }
+           // Add zoom-in icon
+           d3.select("#heartDailyStepsRelationship")
+           .append("div")
+           .attr("class", "zoom-icon zoom-in")
+           .on("click", () => {
+               svg.transition().call(zoom.scaleBy, 2);
+           })
+           .html('<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" width="16" height="16" style="margin-right: 10px;"><path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 0 1-2 0V9H1a1 1 0 1 1 0-2h6V1a1 1 0 0 1 1-1z"/></svg>');
+
+       // Add zoom-out icon
+       d3.select("#heartDailyStepsRelationship")
+           .append("div")
+           .attr("class", "zoom-icon zoom-out")
+           .on("click", () => {
+               svg.transition().call(zoom.scaleBy, 0.5);
+           })
+           .html('<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" width="16" height="16"><path d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"/></svg>');
+
+       const zoom = d3.zoom()
+           .scaleExtent([0.5, 8])
+           .on("zoom", (event) => {
+               svg.attr("transform", event.transform);
+           });
+
+       svg.call(zoom);
+   } catch (error) {
+       console.error('Error creating visualization:', error);
+   }
+}
+}
   
   // Fetch data from FastAPI endpoint
   fetch('http://localhost:8000/read_dataset')

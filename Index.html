@@ -11,15 +11,15 @@
   <script src="Single_Visualization/age_visualization.js" defer></script>
   <script src="Single_Visualization/gender_visualization.js" defer></script>
   <script src="Single_Visualization/occupation_visualization.js" defer></script>
-  <script src="Single_Visualization/SleepDuration_visualization.js" defer></script>
-  <script src="Single_Visualization/StressLevel_Visualization.js" defer></script>
-  <script src="Single_Visualization/qualityOfSleep_Visualization.js" defer></script>
+  <script src="Single_Visualization/sleepDuration_visualization.js" defer></script>
+  <script src="Single_Visualization/stressLevel_visualization.js" defer></script>
+  <script src="Single_Visualization/physicalActivityLevel_visualization.js" defer></script>
   <script src="Single_Visualization/bmi_Visualization.js" defer></script>
-  <script src="Single_Visualization/SleepDisorder_Visualization.js" defer></script>
+  <script src="Single_Visualization/sleepDisorder_visualization.js" defer></script>
 
   <script src="StressSleepRelationshipVisualization.js" defer></script>
   <script src="SleepActivityRelationshipVisualization.js" defer></script>
-  <script src="HeartDailyStepsRelationshipVisualization.js" defer></script>
+  <script src="HeartDailyStepsRelationship_visualization.js" defer></script>
 </head>
 
 <body>
@@ -28,9 +28,9 @@
   </header>
   <nav>
     <ul>
-        <li style="padding: 2px;"><a href="Index.html" >Home</a></li>
+      <li style="padding: 2px;"><a href="Index.html">Home</a></li>
     </ul>
-</nav>
+  </nav>
   <!-- Dropdown container -->
   <div class="dropdown-container">
     <label for="visualizationType">Select Type:</label>
@@ -45,115 +45,115 @@
       <h2 style="color: #3da469;">Usecase</h2>
       <h3 style="color: #3da469;">Single Entities:</h3>
       <p>
-        
+
         Entities: Person ID, Gender, Age, Occupation, Sleep Duration, Quality of Sleep, Physical Activity Level,
-        Stress Level, BMI Category, Blood Pressure, Heart Rate, Daily Steps, Sleep Disorder.        
+        Stress Level, BMI Category, Blood Pressure, Heart Rate, Daily Steps, Sleep Disorder.
       </p>
       <p>
         Users can select an individual or group from the dataset using the dropdown menu.
         Visualizations can include individual health profiles, trends over time, and
         comparative analysis of health metrics for all entities .
-        </p>
-        <p>
+      </p>
+      <p>
         This allows users to focus on the details of specific individuals or groups and gain insights into their health patterns.
-        </p>
-        <h3 style="color: #3da469;">Relationship Entities:</h3>
-      <p> 
-        Entities: Sleep Duration and Stress Level.     
-        </p>
-        <p>
+      </p>
+      <h3 style="color: #3da469;">Relationship Entities:</h3>
+      <p>
+        Entities: Sleep Duration and Stress Level.
+      </p>
+      <p>
         Users can explore the relationship between sleep duration and stress levels using the dropdown menu by Selecting Relationship.
-        </p>
-		    <p>Visualizations can include suitable graphs to highlight correlations or patterns between these two specific health parameters.</p>
-        <p>
+      </p>
+      <p>Visualizations can include suitable graphs to highlight correlations or patterns between these two specific health parameters.</p>
+      <p>
         This allows users to understand how changes in sleep duration may relate to stress levels, providing valuable insights into the interconnectedness of these factors.
       </p>
-  </div>
-
-  <div class="content-container">
-
-    <div id="age" class="visualization" style="display: none;">
-      <!-- Content for Age Visualization -->
     </div>
 
-    <div id="gender" class="visualization" style="display: none;">
-      <!-- Content for Gender Visualization -->
+    <div class="content-container">
+
+      <div id="age" class="visualization" style="display: none;">
+        <!-- Content for Age Visualization -->
+      </div>
+
+      <div id="gender" class="visualization" style="display: none;">
+        <!-- Content for Gender Visualization -->
+      </div>
+
+      <div id="occupation" class="visualization" style="display: none;">
+        <!-- Content for Occupation Visualization -->
+      </div>
+
+      <div id="sleepDuration" class="visualization" style="display: none;">
+        <!-- Content for Sleep Duration Visualization -->
+      </div>
+
+      <div id="stressLevel" class="visualization" style="display: none;">
+        <!-- Content for Stress Level Visualization -->
+      </div>
+
+      <div id="physicalActivityLevel" class="visualization" style="display: none;">
+        <!-- Content for Physical Activity Level Visualization -->
+      </div>
+
+      <div id="bmiCategory" class="visualization" style="display: none;">
+        <!-- Content for BMI Category Visualization -->
+      </div>
+
+      <div id="sleepDisorder" class="visualization" style="display: none;">
+        <!-- Content for Sleep Disorder Visualization -->
+      </div>
+
+      <div id="stressSleepRelationship" class="visualization" style="display: none;">
+        <!-- Content for Stress-Sleep Relationship Visualization -->
+      </div>
+
+      <div id="sleepActivityRelationship" class="visualization" style="display: none;">
+        <!-- Content for Sleep-Activity Relationship Visualization -->
+      </div>
+
+      <div id="heartDailyStepsRelationship" class="visualization" style="display: none;">
+        <!-- Content for Heart-Daily Steps Relationship Visualization -->
+      </div>
+
     </div>
 
-    <div id="occupation" class="visualization" style="display: none;">
-      <!-- Content for Occupation Visualization -->
+    <!-- Add placeholders for other entities -->
+
+    <div class="footer-container">
+      <footer>
+        <p>&copy; 2024 Health Metrics Visualization</p>
+      </footer>
     </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('visualizationType').addEventListener('change', function () {
+          var selectedType = this.value;
 
-    <div id="sleepDuration" class="visualization" style="display: none;">
-      <!-- Content for Sleep Duration Visualization -->
-    </div>
+          // Hide all visualizations
+          document.getElementById('age').style.display = 'none';
+          document.getElementById('gender').style.display = 'none';
+          document.getElementById('occupation').style.display = 'none';
+          document.getElementById('sleepDuration').style.display = 'none';
+          document.getElementById('stressLevel').style.display = 'none';
+          document.getElementById('physicalActivityLevel').style.display = 'none';
+          document.getElementById('bmiCategory').style.display = 'none';
+          document.getElementById('sleepDisorder').style.display = 'none';
 
-    <div id="stressLevel" class="visualization" style="display: none;">
-      <!-- Content for Stress Level Visualization -->
-    </div>
-  
-    <div id="physicalActivityLevel" class="visualization" style="display: none;">
-      <!-- Content for Stress Level Visualization -->
-    </div>
+          document.getElementById('stressSleepRelationship').style.display = 'none';
+          document.getElementById('sleepActivityRelationship').style.display = 'none';
+          document.getElementById('heartDailyStepsRelationship').style.display = 'none';
 
-    <div id="bmiCategory" class="visualization" style="display: none;">
-      <!-- Content for Stress Level Visualization -->
-    </div>
+          // Show the selected visualization based on the dropdown value
+          if (selectedType === 'single') {
+            window.location.href = 'SingleEntities.html';
+          } else if (selectedType === 'relationship') {
+            window.location.href = 'RelationshipEntities.html';
+          }
+        });
+      });
+    </script>
 
-    <div id="sleepDisorder" class="visualization" style="display: none;">
-      <!-- Content for sleepDisorder  Visualization -->
-    </div>
+  </body>
 
-    <div id="stressSleepRelationship" class="visualization" style="display: none;">
-      <!-- Content for Stress-Sleep Relationship Visualization -->
-    </div>
-    
-    <div id="sleepActivityRelationship" class="visualization" style="display: none;">
-      <!-- Content for Stress-Sleep Relationship Visualization -->
-    </div>
-
-    <div id="heartDailyStepsRelationship" class="visualization" style="display: none;">
-      <!-- Content for heartDailyStepsRelationship Visualization -->
-    </div>
-    
-  </div>
-
-  <!-- Add placeholders for other entities -->
-
-  <div class="footer-container">
-    <footer>
-      <p>&copy; 2024 Health Metrics Visualization</p>
-    </footer>
-  </div>
-  <script>
-document.addEventListener('DOMContentLoaded', function () {
-  document.getElementById('visualizationType').addEventListener('change', function () {
-    var selectedType = this.value;
-
-    // Hide all visualizations
-    document.getElementById('age').style.display = 'none';
-    document.getElementById('gender').style.display = 'none';
-    document.getElementById('occupation').style.display = 'none';
-    document.getElementById('sleepDuration').style.display = 'none';
-    document.getElementById('stressLevel').style.display = 'none';
-    document.getElementById('physicalActivityLevel').style.display = 'none';
-    document.getElementById('bmiCategory').style.display = 'none';
-    document.getElementById('sleepDisorder').style.display = 'none';
-
-    document.getElementById('stressSleepRelationship').style.display = 'none';
-    document.getElementById('sleepActivityRelationship').style.display = 'none';
-    document.getElementById('heartDailyStepsRelationship').style.display = 'none';
-    
-    // Show the selected visualization based on the dropdown value
-    if (selectedType === 'single') {
-      window.location.href = 'SingleEntities.html';
-    } else if (selectedType === 'relationship') {
-      window.location.href = 'RelationshipEntities.html';
-    }
-  });
-});
-  </script>
-  
-</body>
-
-</html>
+  </html>

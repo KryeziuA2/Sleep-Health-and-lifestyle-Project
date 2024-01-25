@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 import numpy as np
@@ -14,11 +15,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+print("Serving Index1.html")
 @app.get("/read_dataset")
 def read_dataset():
     try:
         file_path = "./Sleep_health_and_lifestyle_dataset/data.csv"
 
+        print("Serving Index2.html")
         # Read the CSV file using pandas
         data = pd.read_csv(file_path)
 

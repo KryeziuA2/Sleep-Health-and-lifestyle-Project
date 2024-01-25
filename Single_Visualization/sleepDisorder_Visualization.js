@@ -15,14 +15,10 @@ class SleepDisorderVisualizer {
                 count: sleepDisorderCounts[disorder]
             }));
 
-            console.log('Sleep Disorder Data:', sleepDisorderData); // Log sleep disorder data
-
             const svg = d3.select("#sleepDisorder")
                 .append("svg")
                 .attr("width", 400)
                 .attr("height", 300);
-
-            console.log('SVG Element:', svg); // Log the SVG element
 
             const margin = { top: 20, right: 20, bottom: 30, left: 40 };
             const width = 400 - margin.left - margin.right;
@@ -36,9 +32,6 @@ class SleepDisorderVisualizer {
             const y = d3.scaleLinear()
                 .domain([0, d3.max(sleepDisorderData, d => d.count)]).nice()
                 .range([height - margin.bottom, margin.top]);
-
-            console.log('X Scale:', x); // Log X scale
-            console.log('Y Scale:', y); // Log Y scale
 
             svg.append("g")
                 .attr("fill", "steelblue")
@@ -61,14 +54,39 @@ class SleepDisorderVisualizer {
                 .attr("transform", `translate(${margin.left},0)`)
                 .call(d3.axisLeft(y));
 
-            // Define padding values
+            // Add text with padding
             const paddingLeft = 20; // Adjust as needed
             const paddingTop = 5; // Adjust as needed
 
-            // Add text with padding
             svg.append("text")
-                .attr("x", width / 2 + paddingLeft)  // Adjust the left padding
-                .attr("y", margin.top / 2 + paddingTop);  // Adjust the top padding
+                .attr("x", width / 2 + paddingLeft)
+                .attr("y", margin.top / 2 + paddingTop);
+
+            // Add zoom-in icon
+            d3.select("#sleepDisorder")
+                .append("div")
+                .attr("class", "zoom-icon zoom-in")
+                .on("click", () => {
+                    svg.transition().call(zoom.scaleBy, 2);
+                })
+                .html('<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" width="16" height="16" style="margin-right: 10px;"><path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 0 1-2 0V9H1a1 1 0 1 1 0-2h6V1a1 1 0 0 1 1-1z"/></svg>');
+
+            // Add zoom-out icon
+            d3.select("#sleepDisorder")
+                .append("div")
+                .attr("class", "zoom-icon zoom-out")
+                .on("click", () => {
+                    svg.transition().call(zoom.scaleBy, 0.5);
+                })
+                .html('<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" width="16" height="16"><path d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"/></svg>');
+
+            const zoom = d3.zoom()
+                .scaleExtent([0.5, 8])
+                .on("zoom", (event) => {
+                    svg.attr("transform", event.transform);
+                });
+
+            svg.call(zoom);
         } catch (error) {
             console.error('Error creating visualization:', error);
         }
