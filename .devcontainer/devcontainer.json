@@ -1,0 +1,7 @@
+// .devcontainer/devcontainer.json
+{
+    "postCreateCommand": "pip install -r requirements.txt",
+    "postStartCommand": "python main.py",  //  command to start app
+    "remoteUser": "codespace"
+  }
+  
