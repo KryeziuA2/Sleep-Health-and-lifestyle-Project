@@ -5,7 +5,7 @@
 2. Wait for the requirements.txt and devcontainer.json to launch
 3. It will ask to open in web browser 
 4. Allow it
-5. Our Web application will launched
+5. Our Web application will be launched
 ----------------------
 FOR FHIR 
 1. Run FHIR_Resouce_Creator.py
