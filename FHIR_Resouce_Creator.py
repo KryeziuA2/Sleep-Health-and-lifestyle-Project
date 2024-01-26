@@ -2,41 +2,87 @@ import pandas as pd
 import json
 import chardet
 
-# Function to detect the encoding of a file
 def detect_encoding(file_path):
     with open(file_path, 'rb') as f:
         result = chardet.detect(f.read())
     return result['encoding']
 
-# Load CSV files with detected encoding
-# states_df = pd.read_csv("states_data.csv", encoding=detect_encoding("states_data.csv"))
 cities_df = pd.read_csv("./Sleep_health_and_lifestyle_dataset/data.csv", encoding=detect_encoding("./Sleep_health_and_lifestyle_dataset/data.csv"))
 
-# Replace NaN values with a placeholder (e.g., "Unknown")
 cities_df["Sleep Disorder"].fillna("None", inplace=True)
 
-# Create FHIR-like resources
 fhir_resources = []
 
-# Add CityData resources
+# Add Person resources
+person_resources = {}
 for _, entry in cities_df.iterrows():
-    resource = {
-        "resourceType": "PersonData",
-        "PersonID": entry["Person ID"],
-        "Gender": entry["Gender"],
-        "Age": entry["Age"],
-        "Occupation": entry["Occupation"],
-        "SleepDuration": entry["Sleep Duration"],
-        "QualityOfSleep": entry["Quality of Sleep"],
-        "PhysicalActivityLevel": entry["Physical Activity Level"],
-        "StressLevel": entry["Stress Level"],
-        "BMICategory": entry["BMI Category"],
-        "BloodPressure": entry["Blood Pressure"],
-        "HeartRate": entry["Heart Rate"],
-        "DailySteps": entry["Daily Steps"],
-        "SleepDisorder": entry["Sleep Disorder"]
-    }
-    fhir_resources.append(resource)
+    person_id = entry["Person ID"]
+    if person_id not in person_resources:
+        person_resources[person_id] = {
+            "resourceType": "Person",
+            "id": str(person_id),
+            "gender": entry["Gender"],
+            "birthDate": "1900-01-01",
+            "telecom": [
+                {
+                    "system": "phone",
+                    "value": "555-555-5555"
+                }
+            ]
+        }
+
+# Add Observation resources
+observation_resources = []
+for _, entry in cities_df.iterrows():
+    person_id = entry["Person ID"]
+    if person_id in person_resources:
+        subject = {"reference": "Person/" + str(person_id), "display": str(person_id)}
+
+        observation_resources.append({
+            "resourceType": "Observation",
+            "status": "final",
+            "code": {
+                "coding": [
+                    {
+                        "system": "http://loinc.org",
+                        "code": "8867-4",
+                        "display": "Age"
+                    }
+                ]
+            },
+            "subject": subject,
+            "valueQuantity": {
+                "value": int(entry["Age"]),
+                "unit": "a"
+            }
+        })
+
+        observation_resources.append({
+            "resourceType": "Observation",
+            "status": "final",
+            "code": {
+                "coding": [
+                    {
+                        "system": "http://loinc.org",
+                        "code": "42452-4",
+                        "display": "Sleep duration"
+                    }
+                ]
+            },
+            "subject": subject,
+            "valueQuantity": {
+                "value": float(entry["Sleep Duration"]),
+                "unit": "h"
+            }
+        })
+
+        # Add more Observation resources for other fields
+
+        fhir_resources.append({"resource": observation_resources})
+
+# Add Person resources to the output
+for person_id, person_resource in person_resources.items():
+    fhir_resources.append(person_resource)
 
 # Create a FHIR Bundle
 fhir_bundle = {
