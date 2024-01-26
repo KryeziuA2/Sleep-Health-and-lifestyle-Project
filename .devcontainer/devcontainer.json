@@ -1,7 +1,6 @@
-// .devcontainer/devcontainer.json
 {
-    "postCreateCommand": "pip install -r requirements.txt",
-    "postStartCommand": "python main.py",  //  command to start app
-    "remoteUser": "codespace"
-  }
+  "postCreateCommand": "pip install -r requirements.txt && npm install -g concurrently",
+  "postStartCommand": "concurrently \"uvicorn main:app --host 0.0.0.0 --port 8000 --reload\" \"sleep 5 && open http://localhost:8080/\"",
+  "remoteUser": "codespace"
   
+}
